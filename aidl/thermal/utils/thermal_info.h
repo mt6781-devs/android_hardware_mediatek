@@ -132,6 +132,14 @@ struct VirtualSensorInfo {
     FormulaOption formula;
     std::string vt_estimator_model_file;
     std::unique_ptr<::thermal::vtestimator::VirtualTempEstimator> vt_estimator;
+    std::string backup_sensor;
+};
+
+struct PredictorInfo {
+    std::string sensor;
+    bool support_pid_compensation;
+    std::vector<float> prediction_weights;
+    ThrottlingArray k_p_compensate;
 };
 
 struct VirtualPowerRailInfo {
@@ -181,6 +189,7 @@ struct ThrottlingInfo {
     ThrottlingArray s_power;
     ThrottlingArray i_cutoff;
     float i_default;
+    float i_default_pct;
     int tran_cycle;
     std::unordered_map<std::string, ThrottlingArray> excluded_power_info_map;
     std::unordered_map<std::string, BindedCdevInfo> binded_cdev_info_map;
@@ -209,6 +218,7 @@ struct SensorInfo {
     bool is_hidden;
     std::unique_ptr<VirtualSensorInfo> virtual_sensor_info;
     std::shared_ptr<ThrottlingInfo> throttling_info;
+    std::unique_ptr<PredictorInfo> predictor_info;
 };
 
 struct CdevInfo {
