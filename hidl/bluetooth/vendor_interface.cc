@@ -206,12 +206,7 @@ bool VendorInterface::Open(InitializeCompleteCallback initialize_complete_cb,
     return false;
   }
 
-  // Get the local BD address
-
   uint8_t local_bda[BluetoothAddress::kBytes];
-  if (!BluetoothAddress::get_local_address(local_bda)) {
-    LOG_ALWAYS_FATAL("%s: No Bluetooth Address!", __func__);
-  }
   int status = lib_interface_->init(&lib_callbacks, (unsigned char*)local_bda);
   if (status) {
     ALOGE("%s unable to initialize vendor library: %d", __func__, status);
