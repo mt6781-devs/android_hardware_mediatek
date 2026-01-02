@@ -33,7 +33,10 @@ cc_binary {
         "libcodec2_mtk_c2store",
         "libcodec2_mtk_vdec",
         "libcodec2_mtk_venc",
-    ],
+    ] + select(soong_config_variable("android_hardware_mediatek_codec2", "link_v33_libstagefright_foundation"), {
+        true: ["libstagefright_foundation-v33"],
+        default: [],
+    }),
 }
 
 cc_library_shared {
